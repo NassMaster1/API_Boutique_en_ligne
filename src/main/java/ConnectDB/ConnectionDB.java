@@ -35,6 +35,9 @@ public class ConnectionDB {
         return conx.createStatement();
     }
 
+
+
+    //todo suprime ce main bdd
 	  public static void main(String[] args) throws SQLException {
           DaoProduct daoProduct = new DaoProduct();
           List a=daoProduct.getListProduct();
