@@ -19,6 +19,13 @@ public class ProductModel {
         this.idCat = idCat;
     }
 
+    public ProductModel(String brand, String warding, float price, int idCat) {
+        this.brand = brand;
+        this.warding = warding;
+        this.price = price;
+        this.idCat = idCat;
+    }
+
     public int getIdProduct() {
         return idProduct;
     }
