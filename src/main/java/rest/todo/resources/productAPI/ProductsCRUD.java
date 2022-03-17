@@ -42,8 +42,8 @@ public class ProductsCRUD {
     }
 
     @POST
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response PostProducts(@FormParam("brand") String brand,
                                  @FormParam("warding") String warding,
                                  @FormParam("price") float price,
@@ -51,7 +51,7 @@ public class ProductsCRUD {
                                  @Context HttpServletResponse servletResponse) throws SQLException {
 
         ProductModel Product = new ProductModel(brand, warding, price, idCat);
-        productRepository.putProduct(Product);
+        productRepository.postProduct(Product);
         return Response.status(200).entity("Products post OK!").build();
     }
 
@@ -68,7 +68,7 @@ public class ProductsCRUD {
      * @return {@link ProductCRUD}
      */
     @Path("{product}")
-    public ProductCRUD getProduct(@PathParam("product") String id) throws SQLException {
+    public ProductCRUD getProduct(@PathParam("product") int id) throws SQLException {
         return new ProductCRUD(uriInfo, request, id);
     }
 }
