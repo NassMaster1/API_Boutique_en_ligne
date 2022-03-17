@@ -42,13 +42,13 @@ public class ConnectionDB {
               System.out.println(elem.toString());
           }
 
-          ProductModel Product=new ProductModel(1,"dell","assa",1200,23);
-          String s=  "INSERT INTO product (idProduct, brand, warding, price, idCat) VALUES ("
-                  +Product.getIdProduct()+",'"
-                  +Product.getBrand()+"','"
-                  +Product.getWarding()+"',"
-                  +Product.getPrice()+","
-                  +Product.getIdCat() +")";
+          ProductModel product=new ProductModel(1,"dell","assa",1200,23);
+          String s= "UPDATE ws_rest.product SET brand='"+
+                  product.getBrand() + "',warding='"+
+                  product.getWarding() + "',price= "+
+                  product.getPrice() + ",idCat="+
+                  product.getIdCat() + " WHERE idProduct=" +
+                  12;
 
                   System.out.println(s);
 	   }

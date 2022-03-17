@@ -13,6 +13,7 @@ import static ConnectDB.ConnectionDB.getStatement;
 
 public class ProductRepository {
 
+    private  ProductModel product=null;
     private final List<ProductModel> listProduct;
     private final Statement stmt = getStatement();
 
@@ -38,9 +39,6 @@ public class ProductRepository {
         return listProduct;
     }
 
-    public ProductModel getProduct(int id) {
-        return listProduct.get(id);
-    }
 
     public void postProduct(ProductModel product) throws SQLException {
         stmt.executeUpdate("INSERT INTO ws_rest.product ( brand, warding, price, idCat) VALUES ('"
@@ -50,14 +48,34 @@ public class ProductRepository {
                 + product.getIdCat() + ") ");
     }
 
-    public void putProduct(ProductModel product) throws SQLException {
-        stmt.execute("UPDATE ws_rest.product SET brand= '" +
-                product.getBrand() + "', warding ='" +
-                product.getWarding() + "', price = " +
-                product.getPrice() + ", idCat =" +
-                product.getIdCat() + " WHERE" +
-                product.getIdProduct());
+    public int putProduct(int idproduct, ProductModel product) throws SQLException {
+      return  stmt.executeUpdate("UPDATE ws_rest.product SET brand='"+
+              product.getBrand() + "',warding='"+
+              product.getWarding() + "',price= "+
+              product.getPrice() + ",idCat="+
+              product.getIdCat() + " WHERE idProduct=" +
+              idproduct);
+    }
 
+    public int DeleteProduct(int idproduct) throws SQLException {
+        return stmt.executeUpdate("DELETE  FROM ws_rest.product WHERE idProduct=" + idproduct);
+    }
 
+    public ProductModel GetProduct(int idProduct) throws SQLException {
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM product Where idProduct="+idProduct);
+            // Extract data from result set
+            while (rs.next()) {
+                 product= new ProductModel(rs.getInt("idProduct"),
+                        rs.getString("brand"),
+                        rs.getString("warding"),
+                        rs.getFloat("price"),
+                        rs.getInt("idCat")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 }

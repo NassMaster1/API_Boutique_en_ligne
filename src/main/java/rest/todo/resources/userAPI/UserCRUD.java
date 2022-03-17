@@ -1,32 +1,34 @@
-package rest.todo.resources.productAPI;
-
+package rest.todo.resources.userAPI;
 
 import rest.todo.model.ProductModel;
 import rest.todo.repository.ProductRepository;
+import rest.todo.repository.UserRepository;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.sql.SQLException;
 
+@Path("/User")
+public class UserCRUD {
 
-@Path("/product")
-public class ProductCRUD {
     @Context
     UriInfo uriInfo;
     @Context
     Request request;
 
-    ProductRepository productRepository = new ProductRepository();
+    UserRepository userRepository = new UserRepository();
 
-    public ProductCRUD() throws SQLException {
+
+    public UserCRUD() throws SQLException {
     }
 
 
     @GET
-    @Path("{idProduct}")
+    @Path("{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ProductModel GetProduct(@PathParam("idProduct")int idProduct) throws SQLException {
-        return productRepository.GetProduct(idProduct);
+    public ProductModel GetProduct(@PathParam("idUser")int idUser) throws SQLException {
+        return userRepository.GetUser(idUser);
     }
 
     @PUT
@@ -54,9 +56,8 @@ public class ProductCRUD {
     public Response delete(@PathParam("idProduct")int idProduct) throws SQLException {
         int r=productRepository.DeleteProduct(idProduct);
         if (r !=0)
-        return Response.status(200).entity("Products DELETE OK!").build();
+            return Response.status(200).entity("Products DELETE OK!").build();
         else return Response.status(204).entity("Products DELETE not OK!").build();
     }
-
 
 }

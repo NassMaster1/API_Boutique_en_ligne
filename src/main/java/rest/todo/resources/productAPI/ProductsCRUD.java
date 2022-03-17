@@ -41,6 +41,8 @@ public class ProductsCRUD {
         return productRepository.getListProduct();
     }
 
+
+
     @POST
     @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -52,23 +54,7 @@ public class ProductsCRUD {
 
         ProductModel Product = new ProductModel(brand, warding, price, idCat);
         productRepository.postProduct(Product);
-        return Response.status(200).entity("Products post OK!").build();
+        return Response.status(200).entity("User post OK!").build();
     }
 
-    /**
-     * <p>
-     *  Defines that the next path parameter after products is treated as a
-     *  parameter and passed to the Products.
-     * </p>
-     * <p>
-     * Allows to type http://localhost:8080/ici_war_exploded/rest/products/1
-     * 1 will be treaded as parameter product and passed to {@link ProductCRUD}
-     *
-     * @param id of product
-     * @return {@link ProductCRUD}
-     */
-    @Path("{product}")
-    public ProductCRUD getProduct(@PathParam("product") int id) throws SQLException {
-        return new ProductCRUD(uriInfo, request, id);
-    }
 }
