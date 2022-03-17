@@ -13,11 +13,11 @@ import static ConnectDB.ConnectionDB.getStatement;
 
 public class ProductRepository {
 
-    private final List<ProductModel> ListProduct;
+    private final List<ProductModel> listProduct;
     private final Statement stmt = getStatement();
 
     public ProductRepository() throws SQLException {
-        this.ListProduct=new ArrayList<>();
+        this.listProduct = new ArrayList<>();
     }
 
     public List<ProductModel> getListProduct() {
@@ -25,7 +25,7 @@ public class ProductRepository {
             ResultSet rs = stmt.executeQuery("SELECT * FROM product");
             // Extract data from result set
             while (rs.next()) {
-                ListProduct.add(new ProductModel(rs.getInt("idProduct"),
+                listProduct.add(new ProductModel(rs.getInt("idProduct"),
                         rs.getString("brand"),
                         rs.getString("warding"),
                         rs.getFloat("price"),
@@ -35,14 +35,29 @@ public class ProductRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return ListProduct;
+        return listProduct;
+    }
+
+    public ProductModel getProduct(int id) {
+        return listProduct.get(id);
+    }
+
+    public void postProduct(ProductModel product) throws SQLException {
+        stmt.executeUpdate("INSERT INTO ws_rest.product ( brand, warding, price, idCat) VALUES ('"
+                + product.getBrand() + "','"
+                + product.getWarding() + "',"
+                + product.getPrice() + ","
+                + product.getIdCat() + ") ");
     }
 
     public void putProduct(ProductModel product) throws SQLException {
-         stmt.executeUpdate("INSERT INTO ws_rest.product ( brand, warding, price, idCat) VALUES ('"
-                 +product.getBrand()+"','"
-                 +product.getWarding()+"',"
-                 +product.getPrice()+","
-                 +product.getIdCat() +") ");
+        stmt.execute("UPDATE ws_rest.product SET brand= '" +
+                product.getBrand() + "', warding ='" +
+                product.getWarding() + "', price = " +
+                product.getPrice() + ", idCat =" +
+                product.getIdCat() + " WHERE" +
+                product.getIdProduct());
+
+
     }
 }
