@@ -14,11 +14,10 @@ import static ConnectDB.ConnectionDB.getStatement;
 public class ProductRepository {
 
     private  ProductModel product=null;
-    private final List<ProductModel> listProduct;
+    private final List<ProductModel> listProduct=new ArrayList<>();
     private final Statement stmt = getStatement();
 
     public ProductRepository() throws SQLException {
-        this.listProduct = new ArrayList<>();
     }
 
     public List<ProductModel> getListProduct() {

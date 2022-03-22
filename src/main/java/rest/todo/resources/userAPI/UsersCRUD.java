@@ -1,8 +1,6 @@
 package rest.todo.resources.userAPI;
 
-import rest.todo.model.ProductModel;
 import rest.todo.model.UserModel;
-import rest.todo.repository.ProductRepository;
 import rest.todo.repository.UserRepository;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +17,7 @@ public class UsersCRUD {
     @Context
     Request request;
 
-    UserRepository productRepository = new UserRepository();
+    UserRepository userRepository = new UserRepository();
 
     public UsersCRUD() throws SQLException {
     }
@@ -27,14 +25,14 @@ public class UsersCRUD {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UserModel> getListProduct() {
-        return productRepository.getListUser();
+    public List<UserModel> getListUser() {
+        return userRepository.getListUser();
     }
 
     @POST
     @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response PostProducts(@FormParam("firstName") String firstName,
+    public Response getListUser( @FormParam("firstName") String firstName,
                                  @FormParam("lastName") String lastName,
                                  @FormParam("email") String email,
                                  @FormParam("password") String password,
@@ -42,7 +40,7 @@ public class UsersCRUD {
                                  @Context HttpServletResponse servletResponse) throws SQLException {
 
         UserModel user = new UserModel(firstName, lastName, email, password,role);
-        productRepository.postUser(user);
-        return Response.status(200).entity("Products post OK!").build();
+        userRepository.postUser(user);
+        return Response.status(200).entity("User post OK!").build();
     }
 }
