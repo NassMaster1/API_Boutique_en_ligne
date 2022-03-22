@@ -35,23 +35,11 @@ public class ConnectionDB {
 
     //todo suprime ce main bdd
 	  public static void main(String[] args) throws SQLException {
-          ProductRepository daoProduct = new ProductRepository();
-          List<ProductModel> a=daoProduct.getListProduct();
+          getStatement();
 
-          for (Object elem: a) {
-              System.out.println(elem.toString());
-          }
+      }
 
-          ProductModel product=new ProductModel(1,"dell","assa",1200,23);
-          String s= "UPDATE ws_rest.product SET brand='"+
-                  product.getBrand() + "',warding='"+
-                  product.getWarding() + "',price= "+
-                  product.getPrice() + ",idCat="+
-                  product.getIdCat() + " WHERE idProduct=" +
-                  12;
 
-                  System.out.println(s);
-	   }
 
 
 }

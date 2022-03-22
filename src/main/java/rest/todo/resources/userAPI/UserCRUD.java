@@ -1,9 +1,6 @@
 package rest.todo.resources.userAPI;
-
-import rest.todo.model.ProductModel;
-import rest.todo.repository.ProductRepository;
+import rest.todo.model.UserModel;
 import rest.todo.repository.UserRepository;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -27,37 +24,48 @@ public class UserCRUD {
     @GET
     @Path("{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ProductModel GetProduct(@PathParam("idUser")int idUser) throws SQLException {
+    public UserModel GetUser(@PathParam("idUser")int idUser) throws SQLException {
         return userRepository.GetUser(idUser);
     }
 
     @PUT
-    @Path("{idProduct}")
+    @Path("{idUser}")
     @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON,MediaType.APPLICATION_FORM_URLENCODED})
-    public Response putProduct(@PathParam("idProduct")int idProduct,
-                               @FormParam("brand") String brand,
-                               @FormParam("warding") String warding,
-                               @FormParam("price") float price,
-                               @FormParam("idCat") int idCat,
+    public Response PutUser(@PathParam("idUser")int idUser,
+                               @FormParam("firstName") String firstName,
+                               @FormParam("lastName") String lastName,
+                               @FormParam("email") String email,
+                               @FormParam("password") String password,
+                               @FormParam("role") String role,
                                @Context HttpServletResponse servletResponse) throws SQLException {
-        ProductModel Product = new ProductModel(brand, warding, price, idCat);
-        int r=productRepository.putProduct(idProduct,Product);
+        UserModel user = new UserModel(firstName, lastName, email, password,role);
+        int r=userRepository.putUser(idUser,user);
         if (r !=0)
-            return Response.status(200).entity("Products PUT OK!").build();
-        else return Response.status(204).entity("Products PUT not OK!").build();
+            return Response.status(200).entity("User PUT OK!").build();
+        else return Response.status(204).entity("User PUT not OK!").build();
 
     }
 
 
     @DELETE
-    @Path("{idProduct}")
+    @Path("{idUser}")
     @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
-    public Response delete(@PathParam("idProduct")int idProduct) throws SQLException {
-        int r=productRepository.DeleteProduct(idProduct);
+    public Response delete(@PathParam("idUser")int idUser) throws SQLException {
+        int r=userRepository.DeleteUser(idUser);
         if (r !=0)
-            return Response.status(200).entity("Products DELETE OK!").build();
-        else return Response.status(204).entity("Products DELETE not OK!").build();
+            return Response.status(200).entity("User DELETE OK!").build();
+        else return Response.status(204).entity("User DELETE not OK!").build();
+    }
+
+    @POST
+    @Path("/connexion")
+    @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON,MediaType.APPLICATION_FORM_URLENCODED})
+    public boolean autentification(@FormParam("email") String email,
+                            @FormParam("password") String password,
+                            @Context HttpServletResponse servletResponse) throws SQLException {
+        return userRepository.verifyAutentification(email,password);
     }
 
 }
