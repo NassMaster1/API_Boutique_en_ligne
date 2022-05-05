@@ -77,4 +77,25 @@ public class ProductRepository {
         }
         return product;
     }
+
+
+    public List<ProductModel> GetProductbycat(int idCat) throws SQLException {
+        List<ProductModel> listProductbycat=new ArrayList<>();
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM product Where idCat="+idCat);
+            // Extract data from result set
+            while (rs.next()) {
+                listProductbycat.add( new ProductModel(rs.getInt("idProduct"),
+                        rs.getString("brand"),
+                        rs.getString("warding"),
+                        rs.getFloat("price"),
+                        rs.getInt("idCat")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listProductbycat;
+    }
+
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.sql.SQLException;
+import java.util.List;
 
 
 @Path("/product")
@@ -29,6 +30,13 @@ public class ProductCRUD {
         return productRepository.GetProduct(idProduct);
     }
 
+    @GET
+    @Path("bycat/{idCat}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ProductModel> GetProductbycat(@PathParam("idCat")int idCat) throws SQLException {
+        return productRepository.GetProductbycat(idCat);
+    }
+
     @PUT
     @Path("{idProduct}")
     @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
@@ -46,7 +54,6 @@ public class ProductCRUD {
         else return Response.status(204).entity("Products PUT not OK!").build();
 
     }
-
 
     @DELETE
     @Path("{idProduct}")
