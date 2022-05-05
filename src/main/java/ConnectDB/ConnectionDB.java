@@ -1,10 +1,8 @@
 package ConnectDB;
 
-import rest.todo.repository.ProductRepository;
-import rest.todo.model.ProductModel;
 
 import java.sql.*;
-import java.util.List;
+
 
 public class ConnectionDB {
 

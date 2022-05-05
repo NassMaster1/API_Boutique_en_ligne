@@ -82,7 +82,7 @@ public class UserRepository {
     }
 
     public boolean verifyAutentification(String email, String password) throws SQLException {
-      ResultSet result=   stmt.executeQuery("SELECT * FROM usr Where email='"+email+"'AND password='"+password+"'");
+      ResultSet result= stmt.executeQuery("SELECT * FROM usr Where email='"+email+"'AND password='"+password+"'");
       if(result.next())
           return true;
       else

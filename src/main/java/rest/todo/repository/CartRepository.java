@@ -2,7 +2,6 @@ package rest.todo.repository;
 
 
 import rest.todo.model.CartModel;
-import rest.todo.model.CategoryModel;
 import rest.todo.model.ProductModel;
 
 import java.sql.ResultSet;
